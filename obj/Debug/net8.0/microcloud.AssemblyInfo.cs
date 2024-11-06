@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("microcloud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1750812b682c6ed491fe0d0abbb382928d233b2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf35080f599664c1f85737544193ea27cac6ba30")]
 [assembly: System.Reflection.AssemblyProductAttribute("microcloud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("microcloud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
