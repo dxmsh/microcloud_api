@@ -19,6 +19,7 @@ namespace MyApi.Controllers
             _connectionString = configuration.GetConnectionString("AzureSqlDb");
         }
 
+        // GET: api/regions - Get all regions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Region>>> GetRegions()
         {
@@ -44,6 +45,116 @@ namespace MyApi.Controllers
             }
 
             return Ok(regions);
+        }
+
+        // GET: api/regions/{id} - Get a specific region by ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Region>> GetRegion(int id)
+        {
+            Region region = null;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var query = "SELECT id, region_name FROM regions WHERE id = @Id";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            region = new Region
+                            {
+                                Id = reader.GetInt32(0),
+                                RegionName = reader.GetString(1)
+                            };
+                        }
+                    }
+                }
+            }
+
+            if (region == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(region);
+        }
+
+        // POST: api/regions - Add a new region
+        [HttpPost]
+        public async Task<ActionResult<Region>> AddRegion(Region region)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var query = "INSERT INTO regions (region_name) VALUES (@RegionName); SELECT SCOPE_IDENTITY();";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
+
+                    // Execute and get the newly inserted ID
+                    var id = await command.ExecuteScalarAsync();
+                    region.Id = Convert.ToInt32(id);
+                }
+            }
+
+            return CreatedAtAction(nameof(GetRegion), new { id = region.Id }, region);
+        }
+
+        // PUT: api/regions/{id} - Update a specific region by ID
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRegion(int id, Region region)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var query = "UPDATE regions SET region_name = @RegionName WHERE id = @Id";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RegionName", region.RegionName);
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    var rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/regions/{id} - Delete a specific region by ID
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRegion(int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var query = "DELETE FROM regions WHERE id = @Id";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    var rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected == 0)
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            return NoContent();
         }
     }
 }
