@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microcloud", "microcloud.csproj", "{A2223094-0B06-49FC-884E-C61F3396A73D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2223094-0B06-49FC-884E-C61F3396A73D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2223094-0B06-49FC-884E-C61F3396A73D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2223094-0B06-49FC-884E-C61F3396A73D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2223094-0B06-49FC-884E-C61F3396A73D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F1ADC97-EA00-4DDB-8F38-BF77573128D8}
+	EndGlobalSection
+EndGlobal
