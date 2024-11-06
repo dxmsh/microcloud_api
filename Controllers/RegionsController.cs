@@ -1,4 +1,4 @@
-// Controllers/RegionsController.cs
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using MyApi.Models;
@@ -10,6 +10,7 @@ namespace MyApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]  // Requires authentication for all actions by default
     public class RegionsController : ControllerBase
     {
         private readonly string _connectionString;
@@ -21,6 +22,7 @@ namespace MyApi.Controllers
 
         // GET: api/regions - Get all regions
         [HttpGet]
+        [AllowAnonymous]  // Allows access without authentication
         public async Task<ActionResult<IEnumerable<Region>>> GetRegions()
         {
             var regions = new List<Region>();
@@ -49,6 +51,7 @@ namespace MyApi.Controllers
 
         // GET: api/regions/{id} - Get a specific region by ID
         [HttpGet("{id}")]
+        [AllowAnonymous]  // Allows access without authentication
         public async Task<ActionResult<Region>> GetRegion(int id)
         {
             Region region = null;
