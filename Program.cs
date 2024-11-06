@@ -7,6 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Create a 256-bit (32 bytes) key for HMAC-SHA256
 var key = Encoding.UTF8.GetBytes("YourSuperSecretKey123!@#YourSuperSecretKey123!@#"); // 64 characters = 32 bytes
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost") // allow requests from localhost
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -32,6 +43,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("AllowLocalhost");
 
 if (app.Environment.IsDevelopment())
 {
